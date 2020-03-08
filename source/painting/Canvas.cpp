@@ -7,7 +7,7 @@ namespace annie {
     unsigned int h = canvas.size();
     for (unsigned int row = getY(); row < std::min(getY() + (unsigned int)content_.size(), h); ++row) {
       unsigned int w = canvas[canvas.size() - 1 - row].size();
-      for (unsigned int col = getX(); col < std::min(getX() + (unsigned int)content_[row - getY()].size(), w); ++col) {
+      for (unsigned int col = getX(); col < std::min(getX() + (unsigned int)content_[content_.size() - 1 - (row - getY())].size(), w); ++col) {
         canvas[canvas.size() - 1 - row][col] = content_[content_.size() - 1 - (row - getY())][col - getX()];
       }
     }

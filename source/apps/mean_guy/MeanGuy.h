@@ -6,8 +6,11 @@ class MeanGuy: public annie::Object {
  public:
   // rx and ry mean caption's relative x and y to MeanGuy
   MeanGuy(std::vector<std::string>&& content, unsigned int x, unsigned int y, unsigned int rx, unsigned int ry, std::string cap): Object(std::move(content), x, y), caption_(std::vector<std::string>{cap}, x + rx, y + ry) {};
-  inline void toggleCaption() {
-    captionOn_ = !captionOn_;
+  inline void captionOn() {
+    captionOn_ = true;
+  }
+  inline void captionOff() {
+    captionOn_ = false;
   }
   virtual void fillCanvas(std::vector<std::string>& canvas) const override;
 

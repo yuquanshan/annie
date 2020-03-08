@@ -17,42 +17,61 @@ std::mutex ml;
 int main() {
   struct winsize size;
   ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
-  // PlayGround pg(50, 50);
-  annie::Canvas pg(30, 30);
+  unsigned int playGroundWidth = 60;
+  unsigned int playGroundHeight = 30;
+  PlayGround pg(playGroundWidth, playGroundHeight);
   auto meanGuy = std::make_shared<MeanGuy>(
-      std::vector<std::string>{
-        /*
-        "  ///",
-        " (0 0)",
-        "   ~",
-        "/ [|] \\",
-        "   =",
-        "  | |",
-        " ~   ~"
-        */
-      },
-      10,
-      10,
-      7,
-      7,
-      "fuck off!");
+    std::vector<std::string>{
+      "  ///",
+      " (0 0)",
+      "   ~",
+      "/ [|] \\",
+      "   =",
+      "  | |",
+      " ~   ~"
+    },
+    15,
+    15,
+    7,
+    7,
+    "fuck off!"
+  );
   auto walkingGuy = std::make_shared<annie::Object>(
     std::vector<std::string>{
       "  vwv ",
-      " (0_0)"
-      //"sdfdsfs"
-      //"  m m"
+      " (o_o)",
+      "   ~",
+      "/ [|] \\",
+      "   =",
+      "  | |",
+      " ~   ~"
     },
     0,
-    0);
+    0
+  );
+  auto cloud = std::make_shared<annie::Object>(
+    std::vector<std::string>{
+      "     @@@@              @@@@            @@@@     @@@@@@@",
+      "@@@@@@      @@@@@@   @@@    @@@@@@  @@@     @@@@     @@@@@@@@@@",
+      "        @@@@@             @@@@@       @@@@             @@@@@"
+    },
+    0,
+    playGroundHeight - 5
+  );
   pg.registerObj(walkingGuy);
-  //pg.registerMeanGuy(meanGuy);
+  pg.registerObj(cloud);
+  pg.registerMeanGuy(meanGuy);
+
+  unsigned int cloudTimer = 0;
 
   initscr();
-
-  std::thread drawer([&pg](){
+  std::thread drawer([&pg, &cloud, &cloudTimer](){
     while (op != 'x') {
       std::this_thread::sleep_for(std::chrono::milliseconds(20));
+      cloudTimer = (cloudTimer + 1) % 25;
+      if (cloudTimer == 0) {
+        cloud->setX((int)(cloud->getX() + 1) % pg.getWidth());
+      }
       ml.lock();
       pg.drawCanvas();
       ml.unlock();
@@ -83,7 +102,6 @@ int main() {
       ml.unlock();
     }
   });
-
   drawer.join();
   mover.join();
   endwin();

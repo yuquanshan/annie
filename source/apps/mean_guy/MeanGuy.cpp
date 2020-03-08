@@ -14,12 +14,16 @@ void PlayGround::drawCanvas() const {
   int dx = (int)objects_[0]->getX() - objects_[1]->getX();
   int dy = (int)objects_[0]->getY() - objects_[1]->getY();
   if (dx >= 0 || dy >= 0) {
-    if (dx * dx + dy * dy >= 4) {
-      dynamic_cast<MeanGuy*>(objects_[0].get())->toggleCaption();
+    if (dx * dx + dy * dy >= 145) {
+      dynamic_cast<MeanGuy*>(objects_[0].get())->captionOff();
+    } else {
+      dynamic_cast<MeanGuy*>(objects_[0].get())->captionOn();
     }
   } else {
-    if (dx * dx + dy * dy >= 52) {
-      dynamic_cast<MeanGuy*>(objects_[0].get())->toggleCaption();
+    if (dx * dx + dy * dy >= 145) {
+      dynamic_cast<MeanGuy*>(objects_[0].get())->captionOff();
+    } else {
+      dynamic_cast<MeanGuy*>(objects_[0].get())->captionOn();
     }
   }
   annie::Canvas::drawCanvas();
