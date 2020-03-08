@@ -30,11 +30,11 @@ int main() {
       "  | |",
       " ~   ~"
     },
-    15,
-    15,
+    playGroundWidth / 2,
+    playGroundHeight - 15,
     7,
     7,
-    "fuck off!"
+    "go away!"
   );
   auto walkingGuy = std::make_shared<annie::Object>(
     std::vector<std::string>{
