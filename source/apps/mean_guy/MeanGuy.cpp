@@ -9,7 +9,7 @@ void MeanGuy::fillCanvas(std::vector<std::string>& canvas) const {
 }
 
 void PlayGround::drawCanvas() const {
-  assert(objects_.size() == 2);
+  assert(objects_.size() >= 2);
   // mean guy should be the first object
   int dx = (int)objects_[0]->getX() - objects_[1]->getX();
   int dy = (int)objects_[0]->getY() - objects_[1]->getY();
